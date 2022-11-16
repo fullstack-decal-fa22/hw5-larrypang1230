@@ -1,35 +1,33 @@
+import {useState, useEffect} from 'react'
+import axios from 'axios'
 import React from 'react';
 import Post from "./Post";
 import NewPost from "./NewPost";
 
 const Feed = () => {
-  // Un-comment the lines below to complete your solution
-  // ====================
 
-  // const [_________, _________] = useState();
+  const [postData, setPostsData] = useState();
 
-  // const getPostsData = () => {
-  //   axios
-  //     .get(_________) //THIS IS YOUR URL OF YOUR API
-  //     .then(__________) //PROMISE API, THAT MEANS WHEN YOU GET THE DATA WHAT DO I DO WITH IT
-  //     .catch(__________);  //ERROR CATCHING IN CASE WE RECIEVE AN ERROR
-  // };
+  const getPostsData = () => {
+    axios
+      .get('http://localhost:3002/posts')
+      .then((data) => setPostsData(data.data))
+      .catch((error) => console.log(error)); 
+  };
 
-  // useEffect(() => {
-  //   _________();
-  // }, [])
-
-  // ====================
+  useEffect(() => {
+    getPostsData();
+  }, [postData])
 
   return (
     <div style={{ maxWidth: '600px', marginLeft: 'auto', marginRight: 'auto'}}>
       {
-        data && data.map(d =>
+        postData && postData.map(d =>
           <Post title={d.title} body={d.body} comments={d.comments} id={d.id} key={d.id} />
         )
       }
 
-      <NewPost __________ />
+      <NewPost />
     </div>
   )
 
